@@ -2,166 +2,254 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>김민선 | Product Manager Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Pretandard 폰트 */
         @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css");
 
+        :root { 
+            --main-bg: #ffffff; 
+            --sidebar-bg: #f8f9fa; 
+            --point-color: #000; 
+            --text-color: #333;
+            --sidebar-width: 280px; /* PC 사이드바 너비 정의 */
+        }
+
+        /* 기초 스타일 */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Pretendard', sans-serif; color: #333; background: #fff; line-height: 1.6; }
+        body { 
+            font-family: 'Pretendard', sans-serif; 
+            display: flex; 
+            color: var(--text-color); 
+            background-color: var(--main-bg);
+            line-height: 1.6;
+        }
 
-        /* --- 1. PC 사이드바 디자인 --- */
-        #sidebar {
-            width: 260px;
-            height: 100vh;
-            background: #f8f9fa;
-            position: fixed;
-            top: 0; left: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 50px 20px;
+        /* 2. PC 스타일 (기본) */
+        
+        /* 사이드바 */
+        nav { 
+            width: var(--sidebar-width); 
+            height: 100vh; 
+            background: var(--sidebar-bg); 
+            padding: 50px 30px; 
+            position: fixed; top: 0; left: 0;
             border-right: 1px solid #eee;
-            z-index: 1000;
+            display: flex; flex-direction: column; align-items: center;
+            z-index: 100; transition: transform 0.3s ease; /* 모바일 애니메이션용 */
         }
 
+        /* 모바일용 메뉴 버튼 (PC에선 숨김) */
+        .menu-toggle { display: none; }
+
+        /* 프로필 사진 */
         .profile-img {
-            width: 120px; height: 120px; border-radius: 50%;
-            object-fit: cover; border: 3px solid #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 20px;
+            width: 140px; height: 140px; border-radius: 50%;
+            object-fit: cover; border: 4px solid #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 25px;
         }
 
-        #sidebar h2 { font-size: 1.3rem; margin-bottom: 5px; }
-        #sidebar .job-title { font-size: 0.9rem; color: #666; margin-bottom: 40px; }
+        nav h2 { font-size: 1.4rem; margin-bottom: 8px; color: #000; }
+        nav .job-title { font-size: 0.95rem; color: #666; margin-bottom: 50px; text-align: center;}
 
-        #sidebar ul { list-style: none; width: 100%; padding-left: 20px; }
-        #sidebar ul li { margin-bottom: 15px; }
-        #sidebar ul li a { text-decoration: none; color: #444; font-weight: 500; display: block; }
-        #sidebar ul li a:hover { color: #000; font-weight: 700; }
+        /* 메뉴 목록 */
+        nav ul { list-style: none; width: 100%; text-align: left; }
+        nav ul li { margin-bottom: 20px; }
+        nav ul li a { text-decoration: none; color: #444; font-weight: 500; font-size: 1.05rem; transition: 0.2s; display: block;}
+        nav ul li a:hover, nav ul li a.active { color: var(--point-color); font-weight: 700; }
+        
+        /* 서브 메뉴 */
+        nav .sub-menu { padding-left: 15px; font-size: 0.9rem; margin-top: 12px; border-left: 2px solid #ddd;}
+        nav .sub-menu li { margin-bottom: 12px; }
 
-        .sub-menu { padding-left: 15px; margin-top: 10px; border-left: 1px solid #ddd; font-size: 0.9rem; }
-
-        /* --- 2. 본문 영역 --- */
-        main { margin-left: 260px; padding: 80px 50px; max-width: 1000px; }
-        section { margin-bottom: 100px; scroll-margin-top: 30px; }
-        h1 { font-size: 2.5rem; margin-bottom: 20px; }
-        h3 { margin: 40px 0 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .project-card { border: 1px solid #eee; padding: 25px; border-radius: 12px; margin-bottom: 30px; }
-        .project-img { width: 100%; border-radius: 8px; margin-top: 15px; }
-
-        /* --- 3. 모바일용 상단바 (평소엔 숨김) --- */
-        .mobile-header {
-            display: none;
-            width: 100%;
-            height: 60px;
-            background: #fff;
-            position: fixed;
-            top: 0; left: 0;
-            padding: 0 20px;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #eee;
-            z-index: 1100;
-        }
-
-        .hamburger { font-size: 1.5rem; cursor: pointer; background: none; border: none; }
-
-        /* --- 4. 반응형 핵심 (모바일 대응) --- */
-        @media screen and (max-width: 768px) {
-            #sidebar {
-                transform: translateX(-100%); /* 왼쪽으로 숨김 */
-                transition: 0.3s;
-                width: 70%; /* 열렸을 때 너비 */
-                box-shadow: 5px 0 15px rgba(0,0,0,0.1);
-            }
-
-            #sidebar.active { transform: translateX(0); } /* 열림 상태 */
-
-            .mobile-header { display: flex; } /* 상단바 보이기 */
-
-            main { margin-left: 0; padding: 80px 20px; } /* 여백 제거 */
-            
-            h1 { font-size: 2rem; }
+        /* 본문 영역 */
+        main { 
+            margin-left: var(--sidebar-width); /* 사이드바 너비만큼 여백 */
+            padding: 80px 60px; 
+            width: calc(100% - var(--sidebar-width));
+            max-width: 1000px;
         }
         
+        /* 섹션 공통 */
+        section { margin-bottom: 120px; scroll-margin-top: 50px; } 
+        h1 { font-size: 3rem; margin-bottom: 15px; margin-top: 0; font-weight: 800; letter-spacing: -1px;}
+        h2 { font-size: 2.2rem; margin-bottom: 30px; color: #000;}
+        h3 { margin-top: 50px; color: #000; font-size: 1.5rem; border-bottom: 3px solid #eee; padding-bottom: 12px; margin-bottom: 25px;}
+        
+        /* 경험/학력 스타일 */
+        .ex-company { font-size: 1.3rem; font-weight: 700; color: #000; }
+        .ex-title { color: #555; font-weight: 500; font-size: 1.1rem; }
+        .date { color: #888; font-size: 0.95rem; font-weight: 400; margin-left: 10px; }
+        .ex-item { margin-bottom: 40px; }
+        .ex-item ul { list-style: none; margin-top: 15px; padding-left: 5px; }
+        .ex-item ul li { position: relative; padding-left: 20px; margin-bottom: 10px; color: #666;}
+        .ex-item ul li::before { content: "•"; position: absolute; left: 0; color: #ccc; }
+
+        /* 프로젝트 카드 */
+        .project-card { background: #fff; border: 1px solid #f0f0f0; padding: 30px; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
+        .project-img { width: 100%; border: 1px solid #eee; margin: 20px 0; border-radius: 8px; transition: 0.3s; }
+        
         /* 스킬 배지 */
-        .skill-container { display: flex; flex-wrap: wrap; gap: 10px; }
-        .skill-badge { padding: 8px 15px; border: 1px solid #ddd; border-radius: 20px; font-size: 0.9rem; display: flex; align-items: center; }
-        .skill-badge i { margin-right: 8px; }
+        .skill-container { display: flex; flex-wrap: wrap; gap: 12px; }
+        .skill-badge { 
+            display: flex; align-items: center; padding: 12px 20px; 
+            background: #fff; border: 1px solid #e0e0e0; 
+            border-radius: 30px; font-size: 1rem; font-weight: 500; transition: 0.2s;
+        }
+        .skill-badge:hover { border-color: #000; background: #fafafa; }
+        .skill-badge i { margin-right: 12px; font-size: 1.2rem; color: #555; }
+
+        /* ========================================= */
+        /* 3. 모바일 반응형 스타일 (Media Query) */
+        /* 화면 너비가 768px 이하일 때 적용됩니다. */
+        @media screen and (max-width: 768px) {
+            body { flex-direction: column; } /* 세로 배치 */
+
+            /* 사이드바를 위쪽 상단바로 변경 */
+            nav { 
+                width: 100%; height: auto; 
+                position: fixed; top: 0; left: 0;
+                padding: 15px 20px; 
+                flex-direction: row; justify-content: space-between; align-items: center;
+                border-right: none; border-bottom: 1px solid #eee;
+                background: rgba(255,255,255,0.95); backdrop-filter: blur(5px);
+                transform: none;
+            }
+
+            /* 모바일에서 프로필 사진, 직함 숨김 */
+            .profile-img, nav .job-title { display: none; }
+            nav h2 { font-size: 1.1rem; margin-bottom: 0; }
+
+            /* 모바일 메뉴 목록 (평소엔 숨김) */
+            nav ul { 
+                display: none; 
+                position: absolute; top: 100%; left: 0; 
+                width: 100%; background: #fff;
+                padding: 20px; border-bottom: 1px solid #eee;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+            }
+            /* 자바스크립트로 메뉴 열었을 때 클래스 */
+            nav ul.show { display: block; }
+            nav ul li { margin-bottom: 15px; }
+            nav .sub-menu { display: none; } /* 모바일선 서브메뉴 숨김 */
+
+            /* 햄버거 버튼 보이게 */
+            .menu-toggle { display: block; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: #333; }
+
+            /* 본문 영역 조정 */
+            main { 
+                margin-left: 0; padding: 100px 20px 60px 20px; /* 상단바만큼 여백 */
+                width: 100%;
+            }
+            
+            /* 폰트 크기 줄임 */
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            h3 { font-size: 1.3rem; }
+            .ex-company { font-size: 1.1rem; display: block;}
+            .ex-title { font-size: 1rem; display: block; margin-top: 5px;}
+            .date { margin-left: 0; display: block; margin-top: 3px;}
+            
+            .project-card { padding: 20px; }
+            .skill-badge { padding: 10px 15px; font-size: 0.9rem; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="mobile-header">
-        <button class="hamburger" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
-        <strong>MINSUN KIM</strong>
-        <div style="width: 24px;"></div> </div>
-
-    <nav id="sidebar">
-        <img src="profile.jpg" alt="김민선 프로필" class="profile-img">
-        <h2>김민선</h2>
+    <nav>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <button class="menu-toggle" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
+            <h2>MINSUN KIM</h2>
+        </div>
+        
+        <img src="profile.jpg" alt="김민선 프로필 사진" class="profile-img">
         <p class="job-title">Product Manager</p>
         
-        <ul>
-            <li><a href="#about" onclick="toggleSidebar()">About Me</a></li>
+        <ul id="menuList">
+            <li><a href="#about" onclick="closeMenu()">About Me</a></li>
             <li>
-                <a href="#project" onclick="toggleSidebar()">Project</a>
+                <a href="#project" onclick="closeMenu()">Project</a>
                 <ul class="sub-menu">
-                    <li><a href="#kream" onclick="toggleSidebar()">- KREAM</a></li>
-                    <li><a href="#musinsa" onclick="toggleSidebar()">- MUSINSA</a></li>
+                    <li><a href="#kream">- KREAM</a></li>
+                    <li><a href="#musinsa">- MUSINSA</a></li>
                 </ul>
             </li>
-            <li><a href="#skill" onclick="toggleSidebar()">Skill</a></li>
+            <li><a href="#skill" onclick="closeMenu()">Skill</a></li>
         </ul>
     </nav>
 
     <main>
         <section id="about">
             <h1>안녕하세요,<br>김민선입니다.</h1>
-            <p>꾸준함으로 탁월함을 만들어내는 기획자입니다. [cite: 7, 100]</p>
+            <p style="font-size: 1.1rem; color: #666; margin-top: 20px; max-width: 600px;">
+                꾸준함으로 탁월함을 만들어내는 Product Manager입니다.<br>
+                커머스 플랫폼에서 사용자 경험을 혁신하고 비즈니스 가치를 창출하는 데 집중하고 있습니다.
+            </p>
             
             <h3>Experience</h3>
-            <p><strong>KREAM | 서비스기획</strong> (2025.06 ~ 현재)</p>
-            <p><strong>MUSINSA | PM</strong> (2022.05 ~ 2025.06) [cite: 11, 12]</p>
-            <ul>
-                <li>브랜드숍 구조 개편 및 무신사 2.0 개편 리딩 [cite: 13, 21]</li>
-                <li>상품 전환율 5.3%p 상승 등 지표 개선 경험 [cite: 26]</li>
-            </ul>
+            <div class="ex-item">
+                <span class="ex-company">KREAM</span> <span class="ex-title">| 서비스기획</span> <span class="date">(2025.06 ~ 현재)</span>
+                <ul>
+                    <li>커머스 유저 시나리오 설계 및 프로덕트 백로그 관리</li>
+                    <li>데이터 기반 가설 수립 및 Amplitude를 통한 지표 분석</li>
+                </ul>
+            </div>
+            <div class="ex-item">
+                <span class="ex-company">MUSINSA</span> <span class="ex-title">| PM</span> <span class="date">(2022.05 ~ 2025.06)</span>
+                <ul>
+                    <li>브랜드숍 구조 개편 리딩 및 무신사 2.0 전시 지면 개선</li>
+                    <li>PLUS 배송 서비스 및 뷰티 서비스 확장 기획</li>
+                </ul>
+            </div>
 
             <h3>Education</h3>
-            <p><strong>KAIST 정보경영 석사</strong> (2025.09 ~ 재학 중)</p>
-            <p><strong>서울대학교 학사</strong> (의류학/경영학 부전공) [cite: 62]</p>
+            <div class="ex-item">
+                <span class="ex-company">KAIST (한국과학기술원)</span> <span class="date">| 정보경영 석사 (2025.09 ~ 재학 중)</span>
+            </div>
+            <div class="ex-item">
+                <span class="ex-company">서울대학교</span> <span class="date">| 학사 (의류학과 전공 / 경영학과 부전공)</span>
+            </div>
         </section>
 
         <section id="project">
             <h2>Project</h2>
+            
             <div id="kream" class="project-card">
-                <h3>KREAM 신규 기획</h3>
-                <img src="kream_ppt1.png" alt="KREAM 프로젝트" class="project-img">
+                <h3>KREAM | 프로젝트 제목</h3>
+                <p class="date">2025.07 ~ 2025.10 (예시)</p>
+                <img src="kream_ppt1.png" alt="KREAM 프로젝트 PPT" class="project-img">
             </div>
+            
             <div id="musinsa" class="project-card">
-                <h3>무신사 브랜드숍 개편 [cite: 15]</h3>
-                <img src="musinsa_ppt1.png" alt="무신사 프로젝트" class="project-img">
+                <h3>MUSINSA | 브랜드숍 구조 개편</h3>
+                <p class="date">2023.11 ~ 2024.04</p>
+                <img src="musinsa_ppt1.png" alt="무신사 프로젝트 PPT" class="project-img">
             </div>
         </section>
 
         <section id="skill">
-            <h2>Skill [cite: 72]</h2>
+            <h2>Skill</h2>
             <div class="skill-container">
-                <div class="skill-badge"><i class="fa-solid fa-pen-nib"></i> Figma [cite: 74]</div>
-                <div class="skill-badge"><i class="fa-solid fa-chart-line"></i> GA4 / Amplitude [cite: 73]</div>
-                <div class="skill-badge"><i class="fa-solid fa-database"></i> SQL / Bigquery [cite: 73]</div>
+                <div class="skill-badge"><i class="fa-solid fa-pen-nib"></i> Figma</div>
+                <div class="skill-badge"><i class="fa-solid fa-chart-line"></i> Amplitude / GA4</div>
+                <div class="skill-badge"><i class="fa-solid fa-database"></i> SQL / Bigquery</div>
+                <div class="skill-badge"><i class="fa-brands fa-jira"></i> JIRA</div>
             </div>
         </section>
     </main>
 
     <script>
-        function toggleSidebar() {
-            // 화면 너비가 768px 이하일 때만 작동하도록 조건 추가
-            if (window.innerWidth <= 768) {
-                const sidebar = document.getElementById('sidebar');
-                sidebar.classList.toggle('active');
+        // 메뉴 열기/닫기 토글
+        function toggleMenu() {
+            document.getElementById("menuList").classList.toggle("show");
+        }
+        // 메뉴 클릭 시 자동으로 닫기 (모바일)
+        function closeMenu() {
+            if(window.innerWidth <= 768) {
+                document.getElementById("menuList").classList.remove("show");
             }
         }
     </script>
