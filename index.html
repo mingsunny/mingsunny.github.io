@@ -2,231 +2,219 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>김민선 | Product Manager Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Pretandard 폰트 */
         @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css");
 
-        :root { 
-            --main-bg: #ffffff; 
-            --sidebar-bg: #f8f9fa; 
-            --point-color: #000; 
-            --text-color: #333;
-            --sidebar-width: 280px; /* PC 사이드바 너비 정의 */
-        }
-
-        /* 기초 스타일 */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            font-family: 'Pretendard', sans-serif; 
-            display: flex; 
-            color: var(--text-color); 
-            background-color: var(--main-bg);
-            line-height: 1.6;
-        }
+        body { font-family: 'Pretendard', sans-serif; color: #333; background: #fff; line-height: 1.6; }
 
-        /* 2. PC 스타일 (기본) */
-        
-        /* 사이드바 */
-        nav { 
-            width: var(--sidebar-width); 
-            height: 100vh; 
-            background: var(--sidebar-bg); 
-            padding: 50px 30px; 
+        #sidebar {
+            width: 280px; height: 100vh; background: #f8f9fa;
             position: fixed; top: 0; left: 0;
-            border-right: 1px solid #eee;
             display: flex; flex-direction: column; align-items: center;
-            z-index: 100; transition: transform 0.3s ease; /* 모바일 애니메이션용 */
+            padding: 50px 20px; border-right: 1px solid #eee; z-index: 1000;
         }
 
-        /* 모바일용 메뉴 버튼 (PC에선 숨김) */
-        .menu-toggle { display: none; }
-
-        /* 프로필 사진 */
         .profile-img {
-            width: 140px; height: 140px; border-radius: 50%;
-            object-fit: cover; border: 4px solid #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 25px;
+            width: 130px; height: 130px; border-radius: 50%;
+            object-fit: cover; border: 3px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 20px;
         }
 
-        nav h2 { font-size: 1.4rem; margin-bottom: 8px; color: #000; }
-        nav .job-title { font-size: 0.95rem; color: #666; margin-bottom: 50px; text-align: center;}
+        #sidebar h2 { font-size: 1.4rem; margin-bottom: 5px; }
+        #sidebar .job-title { font-size: 0.95rem; color: #666; margin-bottom: 40px; }
+        #sidebar ul { list-style: none; width: 100%; padding-left: 20px; }
+        #sidebar ul li { margin-bottom: 18px; }
+        #sidebar ul li a { text-decoration: none; color: #444; font-weight: 500; display: block; }
+        #sidebar ul li a:hover { color: #000; font-weight: 700; }
+        .sub-menu { padding-left: 15px; margin-top: 10px; border-left: 1px solid #ddd; font-size: 0.85rem; }
 
-        /* 메뉴 목록 */
-        nav ul { list-style: none; width: 100%; text-align: left; }
-        nav ul li { margin-bottom: 20px; }
-        nav ul li a { text-decoration: none; color: #444; font-weight: 500; font-size: 1.05rem; transition: 0.2s; display: block;}
-        nav ul li a:hover, nav ul li a.active { color: var(--point-color); font-weight: 700; }
+        main { margin-left: 280px; padding: 80px 60px; max-width: 1100px; }
+        section { margin-bottom: 120px; scroll-margin-top: 50px; }
+        h1 { font-size: 2.8rem; margin-bottom: 20px; font-weight: 800; }
+        h2 { font-size: 2rem; margin-bottom: 30px; border-bottom: 3px solid #333; padding-bottom: 10px; display: inline-block; }
         
-        /* 서브 메뉴 */
-        nav .sub-menu { padding-left: 15px; font-size: 0.9rem; margin-top: 12px; border-left: 2px solid #ddd;}
-        nav .sub-menu li { margin-bottom: 12px; }
+        .project-card { background: #fff; border: 1px solid #eee; padding: 30px; border-radius: 15px; margin-bottom: 40px; box-shadow: 0 2px 15px rgba(0,0,0,0.03); }
+        .project-tag { display: inline-block; background: #f0f0f0; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 10px; font-weight: 600; }
+        
+        .project-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+        .project-header h3 { font-size: 1.5rem; color: #000; margin: 0; }
+        .project-duration { color: #999; font-size: 0.9rem; font-weight: 400; }
 
-        /* 본문 영역 */
-        main { 
-            margin-left: var(--sidebar-width); /* 사이드바 너비만큼 여백 */
-            padding: 80px 60px; 
-            width: calc(100% - var(--sidebar-width));
-            max-width: 1000px;
+        .project-content p { margin-bottom: 8px; font-size: 0.95rem; }
+        .project-content strong { color: #000; }
+
+        .image-group { display: flex; gap: 15px; margin-top: 25px; }
+        .image-group .project-img { width: calc(50% - 7.5px); margin-top: 0; }
+        .project-img { width: 100%; border: 1px solid #f0f0f0; border-radius: 8px; margin-top: 20px; }
+
+        .experience-box { margin-bottom: 40px; }
+        .experience-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; flex-wrap: wrap; }
+        .company-name { font-size: 1.3rem; font-weight: 700; color: #000; }
+        .period { color: #888; font-size: 0.95rem; }
+
+        .mobile-header {
+            display: none; width: 100%; height: 60px; background: #fff;
+            position: fixed; top: 0; left: 0; padding: 0 20px;
+            align-items: center; justify-content: space-between;
+            border-bottom: 1px solid #eee; z-index: 1100;
         }
-        
-        /* 섹션 공통 */
-        section { margin-bottom: 120px; scroll-margin-top: 50px; } 
-        h1 { font-size: 3rem; margin-bottom: 15px; margin-top: 0; font-weight: 800; letter-spacing: -1px;}
-        h2 { font-size: 2.2rem; margin-bottom: 30px; color: #000;}
-        h3 { margin-top: 50px; color: #000; font-size: 1.5rem; border-bottom: 3px solid #eee; padding-bottom: 12px; margin-bottom: 25px;}
-        
-        /* 경험/학력 스타일 */
-        .ex-company { font-size: 1.3rem; font-weight: 700; color: #000; }
-        .ex-title { color: #555; font-weight: 500; font-size: 1.1rem; }
-        .date { color: #888; font-size: 0.95rem; font-weight: 400; margin-left: 10px; }
-        .ex-item { margin-bottom: 40px; }
-        .ex-item ul { list-style: none; margin-top: 15px; padding-left: 5px; }
-        .ex-item ul li { position: relative; padding-left: 20px; margin-bottom: 10px; color: #666;}
-        .ex-item ul li::before { content: "•"; position: absolute; left: 0; color: #ccc; }
+        .hamburger { font-size: 1.5rem; cursor: pointer; background: none; border: none; }
 
-        /* 프로젝트 카드 */
-        .project-card { background: #fff; border: 1px solid #f0f0f0; padding: 30px; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
-        .project-img { width: 100%; border: 1px solid #eee; margin: 20px 0; border-radius: 8px; transition: 0.3s; }
-        
-        /* 스킬 배지 */
-        .skill-container { display: flex; flex-wrap: wrap; gap: 12px; }
-        .skill-badge { 
-            display: flex; align-items: center; padding: 12px 20px; 
-            background: #fff; border: 1px solid #e0e0e0; 
-            border-radius: 30px; font-size: 1rem; font-weight: 500; transition: 0.2s;
-        }
-        .skill-badge:hover { border-color: #000; background: #fafafa; }
-        .skill-badge i { margin-right: 12px; font-size: 1.2rem; color: #555; }
-
-        /* ========================================= */
-        /* 3. 모바일 반응형 스타일 (Media Query) */
-        /* 화면 너비가 768px 이하일 때 적용됩니다. */
         @media screen and (max-width: 768px) {
-            body { flex-direction: column; } /* 세로 배치 */
-
-            /* 사이드바를 위쪽 상단바로 변경 */
-            nav { 
-                width: 100%; height: auto; 
-                position: fixed; top: 0; left: 0;
-                padding: 15px 20px; 
-                flex-direction: row; justify-content: space-between; align-items: center;
-                border-right: none; border-bottom: 1px solid #eee;
-                background: rgba(255,255,255,0.95); backdrop-filter: blur(5px);
-                transform: none;
-            }
-
-            /* 모바일에서 프로필 사진, 직함 숨김 */
-            .profile-img, nav .job-title { display: none; }
-            nav h2 { font-size: 1.1rem; margin-bottom: 0; }
-
-            /* 모바일 메뉴 목록 (평소엔 숨김) */
-            nav ul { 
-                display: none; 
-                position: absolute; top: 100%; left: 0; 
-                width: 100%; background: #fff;
-                padding: 20px; border-bottom: 1px solid #eee;
-                box-shadow: 0 10px 15px rgba(0,0,0,0.05);
-            }
-            /* 자바스크립트로 메뉴 열었을 때 클래스 */
-            nav ul.show { display: block; }
-            nav ul li { margin-bottom: 15px; }
-            nav .sub-menu { display: none; } /* 모바일선 서브메뉴 숨김 */
-
-            /* 햄버거 버튼 보이게 */
-            .menu-toggle { display: block; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: #333; }
-
-            /* 본문 영역 조정 */
-            main { 
-                margin-left: 0; padding: 100px 20px 60px 20px; /* 상단바만큼 여백 */
-                width: 100%;
-            }
-            
-            /* 폰트 크기 줄임 */
-            h1 { font-size: 2.2rem; }
-            h2 { font-size: 1.8rem; }
-            h3 { font-size: 1.3rem; }
-            .ex-company { font-size: 1.1rem; display: block;}
-            .ex-title { font-size: 1rem; display: block; margin-top: 5px;}
-            .date { margin-left: 0; display: block; margin-top: 3px;}
-            
-            .project-card { padding: 20px; }
-            .skill-badge { padding: 10px 15px; font-size: 0.9rem; }
+            #sidebar { transform: translateX(-100%); transition: 0.3s; width: 80%; }
+            #sidebar.active { transform: translateX(0); }
+            .mobile-header { display: flex; }
+            main { margin-left: 0; padding: 90px 20px 60px; }
+            .image-group { flex-direction: column; }
+            .image-group .project-img { width: 100%; }
+            .project-header { flex-direction: column; gap: 2px; }
         }
+
+        .skill-badge { display: inline-flex; align-items: center; padding: 10px 18px; background: #fff; border: 1px solid #ddd; border-radius: 30px; margin: 5px; font-size: 0.95rem; }
+        .skill-badge i { margin-right: 10px; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <button class="menu-toggle" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
-            <h2>MINSUN KIM</h2>
-        </div>
-        
-        <img src="profile.JPG" alt="김민선 프로필 사진" class="profile-img">
+    <div class="mobile-header">
+        <button class="hamburger" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+        <strong>MINSUN KIM</strong>
+        <div style="width: 24px;"></div>
+    </div>
+
+    <nav id="sidebar">
+        <img src="profile.JPG" alt="김민선 프로필" class="profile-img">
+        <h2>김민선</h2>
         <p class="job-title">Product Manager</p>
-        
-        <ul id="menuList">
-            <li><a href="#about" onclick="closeMenu()">About Me</a></li>
+        <ul>
+            <li><a href="#about" onclick="toggleSidebar()">About Me</a></li>
             <li>
-                <a href="#project" onclick="closeMenu()">Project</a>
+                <a href="#project" onclick="toggleSidebar()">Project</a>
                 <ul class="sub-menu">
-                    <li><a href="#kream">- KREAM</a></li>
-                    <li><a href="#musinsa">- MUSINSA</a></li>
+                    <li><a href="#kream-section" onclick="toggleSidebar()">- KREAM</a></li>
+                    <li><a href="#musinsa-section" onclick="toggleSidebar()">- MUSINSA</a></li>
+                    <li><a href="#vieworks-section" onclick="toggleSidebar()">- VIEWORKS</a></li>
                 </ul>
             </li>
-            <li><a href="#skill" onclick="closeMenu()">Skill</a></li>
+            <li><a href="#skill" onclick="toggleSidebar()">Skill</a></li>
         </ul>
     </nav>
 
     <main>
         <section id="about">
             <h1>안녕하세요,<br>김민선입니다.</h1>
-            <p style="font-size: 1.1rem; color: #666; margin-top: 20px; max-width: 600px;">
-                꾸준함으로 탁월함을 만들어내는 Product Manager입니다.<br>
-                커머스 플랫폼에서 사용자 경험을 혁신하고 비즈니스 가치를 창출하는 데 집중하고 있습니다.
+            <p style="font-size: 1.15rem; color: #555; margin-bottom: 40px;">
+                사용자 시나리오 설계를 통해 커머스 환경에서의 문제 해결에 집중하고 있습니다. 비즈니스 목표 달성을 위해 전략 수립부터 성과 분석까지 프로젝트 전반을 리딩합니다.
             </p>
             
-            <h3>Experience</h3>
-            <div class="ex-item">
-                <span class="ex-company">KREAM</span> <span class="ex-title">| 서비스기획</span> <span class="date">(2025.06 ~ 현재)</span>
-                <ul>
-                    <li>커머스 유저 시나리오 설계 및 프로덕트 백로그 관리</li>
-                    <li>데이터 기반 가설 수립 및 Amplitude를 통한 지표 분석</li>
-                </ul>
+            <h2>Work Experience</h2>
+            <div class="experience-box">
+                <div class="experience-header"><span class="company-name">KREAM</span><span class="period">2025.06 - 현재</span></div>
+                <p><strong>서비스기획</strong></p>
+                <p>커머스 유저 시나리오 설계 및 프로덕트 전략 수립</p>
             </div>
-            <div class="ex-item">
-                <span class="ex-company">MUSINSA</span> <span class="ex-title">| PM</span> <span class="date">(2022.05 ~ 2025.06)</span>
-                <ul>
-                    <li>브랜드숍 구조 개편 리딩 및 무신사 2.0 전시 지면 개선</li>
-                    <li>PLUS 배송 서비스 및 뷰티 서비스 확장 기획</li>
-                </ul>
+            <div class="experience-box">
+                <div class="experience-header"><span class="company-name">무신사 (MUSINSA)</span><span class="period">2022.05 - 2025.06</span></div>
+                <p><strong>Product Manager</strong> | 전시 영역 담당 (전문관, 상품상세, 브랜드숍 등)</p>
+            </div>
+            <div class="experience-box">
+                <div class="experience-header"><span class="company-name">뷰웍스 (VIEWORKS)</span><span class="period">2021.01 - 2022.04</span></div>
+                <p><strong>사업기획 / PMO</strong> | 중장기 전략 로드맵 및 개발 프로세스 수립</p>
+            </div>
+            <div class="experience-box">
+                <div class="experience-header"><span class="company-name">LF</span><span class="period">2019.01 - 2020.12</span></div>
+                <p><strong>온라인바이어 (MD)</strong> | 닥스/헤지스여성 온라인 상품 기획</p>
             </div>
 
-            <h3>Education</h3>
-            <div class="ex-item">
-                <span class="ex-company">KAIST (한국과학기술원)</span> <span class="date">| 정보경영 석사 (2025.09 ~ 재학 중)</span>
+            <h2>Education</h2>
+            <div class="experience-box">
+                <div class="experience-header"><span class="company-name">KAIST (한국과학기술원)</span><span class="period">2025.09 - 현재 재학</span></div>
+                <p>정보경영 석사 과정</p>
             </div>
-            <div class="ex-item">
-                <span class="ex-company">서울대학교</span> <span class="date">| 학사 (의류학과 전공 / 경영학과 부전공)</span>
+            <div class="experience-box">
+                <div class="experience-header"><span class="company-name">서울대학교</span><span class="period">2014.03 - 2019.02</span></div>
+                <p>의류학과 학사 (경영학과 부전공)</p>
             </div>
         </section>
 
         <section id="project">
-            <h2>Project</h2>
-            
-            <div id="kream" class="project-card">
-                <h3>KREAM | 프로젝트 제목</h3>
-                <p class="date">2025.07 ~ 2025.10 (예시)</p>
-                <img src="kream_ppt1.png" alt="KREAM 프로젝트 PPT" class="project-img">
+            <h2>Major Projects</h2>
+
+            <div id="kream-section">
+                <div class="project-card">
+                    <span class="project-tag">KREAM</span>
+                    <div class="project-header">
+                        <h3>신규 서비스 기획</h3>
+                        <span class="project-duration">2025.06 - 현재</span>
+                    </div>
+                    <div class="project-content">
+                        <p><strong>내용:</strong> 사용자가 상품을 더 잘 발견할 수 있도록 유저 시나리오 및 기능 기획 수행</p>
+                    </div>
+                    <img src="TBD.png" alt="KREAM 화면" class="project-img">
+                </div>
             </div>
-            
-            <div id="musinsa" class="project-card">
-                <h3>MUSINSA | 브랜드숍 구조 개편</h3>
-                <p class="date">2023.11 ~ 2024.04</p>
-                <img src="musinsa_ppt1.png" alt="무신사 프로젝트 PPT" class="project-img">
+
+            <div id="musinsa-section">
+                <div class="project-card">
+                    <span class="project-tag">MUSINSA</span>
+                    <div class="project-header">
+                        <h3>브랜드숍 구조 개편</h3>
+                        <span class="project-duration">2024.09 - 2025.02</span>
+                    </div>
+                    <div class="project-content">
+                        <p><strong>목표:</strong> 브랜드의 상품과 콘텐츠를 다양하게 탐색하여 브랜드 가치를 강화</p>
+                        <p><strong>성과:</strong> 상품전환율 2.4%p 상승, 콘텐츠 전환율 1.5%p 상승</p>
+                    </div>
+                    <img src="project_brandshop_1.jpg" alt="무신사 개편 화면" class="project-img">
+                </div>
+            </div>
+
+                <div class="project-card">
+                    <span class="project-tag">MUSINSA</span>
+                    <div class="project-header">
+                        <h3>무신사 2.0 개편</h3>
+                        <span class="project-duration">2023.11 - 2024.08</span>
+                    </div>
+                    <div class="project-content">
+                        <p><strong>목표:</strong> 복잡한 사용성 개선 및 다양한 사업으로의 확장 기반 마련</p>
+                        <p><strong>성과:</strong> 상품전환율 5.3%p 상승, 브랜드 좋아요 10배 이상 상승</p>
+                    </div>
+                    <div class="image-group">
+                        <img src="project_brandshop_2.jpg" alt="개편2" class="project-img">
+                        <img src="project_brandshop_3.jpg" alt="개편2" class="project-img">
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <span class="project-tag">MUSINSA</span>
+                    <div class="project-header">
+                        <h3>뷰티 서비스 확장</h3>
+                        <span class="project-duration">2022.10 - 2023.05</span>
+                    </div>
+                    <div class="project-content">
+                        <p><strong>목표:</strong> 뷰티 카테고리 GMV 성장 및 고객 인지도 확보</p>
+                        <p><strong>성과:</strong> 뷰티 매출 전년대비 2배 이상 상승, 뷰티 브랜드 좋아요 약 80만 건 증가</p>
+                    </div>
+                    <img src="project_beauty_1.jpg" alt="뷰티 서비스 화면" class="project-img">
+                </div>
+            </div>
+
+            <div id="vieworks-section">
+                <div class="project-card">
+                    <span class="project-tag">VIEWORKS</span>
+                    <div class="project-header">
+                        <h3>표준 개발 프로세스 수립</h3>
+                        <span class="project-duration">2021.05 - 2022.04</span>
+                    </div>
+                    <div class="project-content">
+                        <p><strong>목표:</strong> 의료기기 인허가 대응 효율화 및 부서별 프로세스 표준화</p>
+                        <p><strong>성과:</strong> 인허가 준비 기간 1MM 단축 및 문서 퀄리티 상향</p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -236,20 +224,16 @@
                 <div class="skill-badge"><i class="fa-solid fa-pen-nib"></i> Figma</div>
                 <div class="skill-badge"><i class="fa-solid fa-chart-line"></i> Amplitude / GA4</div>
                 <div class="skill-badge"><i class="fa-solid fa-database"></i> SQL / Bigquery</div>
-                <div class="skill-badge"><i class="fa-brands fa-jira"></i> JIRA</div>
+                <div class="skill-badge"><i class="fa-brands fa-jira"></i> JIRA / Confluence</div>
             </div>
         </section>
     </main>
 
     <script>
-        // 메뉴 열기/닫기 토글
-        function toggleMenu() {
-            document.getElementById("menuList").classList.toggle("show");
-        }
-        // 메뉴 클릭 시 자동으로 닫기 (모바일)
-        function closeMenu() {
-            if(window.innerWidth <= 768) {
-                document.getElementById("menuList").classList.remove("show");
+        function toggleSidebar() {
+            if (window.innerWidth <= 768) {
+                const sidebar = document.getElementById('sidebar');
+                sidebar.classList.toggle('active');
             }
         }
     </script>
